@@ -1,0 +1,35 @@
+.globalContainer {
+    height: 5vh;
+    width: 99vw;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
+    font-family: 'roboto';
+}
+
+.globalContainer p {
+    font-size: 1.2rem;
+    margin: 15px;
+    cursor: pointer;
+    font-weight: 400;
+    color: #666;
+}
+
+.logoContainer {
+    font-size: 1.2rem;
+    margin: 15px;
+    cursor: pointer;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.logoContainer p {
+    font-weight: 300;
+}
+
+.menuBtns {
+    display: flex;
+    margin-right: 5vw;
+}
