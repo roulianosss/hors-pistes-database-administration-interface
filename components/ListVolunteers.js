@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { useSelector } from "react-redux";
+
 
 const columns = [
   { field: "surname", headerName: "Surname", width: 150 },
@@ -17,13 +19,26 @@ const columns = [
 ]
 
 export default function ListVolunteers(props) {
+  const user = useSelector(state => state.user.value)
   const [loading, setLoading] = useState(true)
   const [allUsers, setAllUsers] = useState([]);
+  
   useEffect(() => {
     const fetchAllUsers = async () => {
-      const res = await fetch("http://localhost:3000/users");
+      const res = await fetch(`${process.env.BACKEND_URL}/users`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${user.token}`
+        }
+      });
       const allUsersData = await res.json();
-      setAllUsers(allUsersData.reverse());
+      if(!allUsersData.result){
+        props.handleSnackBar(allUsersData.severity, allUsersData.message)
+        
+        return
+      }
+      setAllUsers(allUsersData.data.reverse());
       setLoading(false)
     }
     fetchAllUsers()

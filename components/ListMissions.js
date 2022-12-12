@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import { useSelector } from "react-redux";
 
 const columns = [
   { field: "projectName", headerName: "Project name", width: 150 },
@@ -15,13 +16,24 @@ const columns = [
 ]
 
 export default function ListMissions(props) {
+  const user = useSelector(state => state.user.value)
   const [loading, setLoading] = useState(true)
   const [allMissions, setAllMissions] = useState([]);
   useEffect(() => {
     const fetchAllMissions = async () => {
-      const res = await fetch("http://localhost:3000/missions");
+      const res = await fetch(`${process.env.BACKEND_URL}/missions`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${user.token}`
+        }
+      });
       const allMissionsData = await res.json();
-      setAllMissions(allMissionsData.filter(mission => mission.projectName !== 'none').reverse());
+      if(!allMissionsData.result){
+        props.handleSnackBar(allMissionsData.severity, allMissionsData.message)
+        return
+      }
+      setAllMissions(allMissionsData.data.filter(mission => mission.projectName !== 'none').reverse());
       setLoading(false)
     };
     fetchAllMissions();

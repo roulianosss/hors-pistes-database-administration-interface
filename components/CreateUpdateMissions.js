@@ -13,8 +13,10 @@ import Box from "@mui/material/Box";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useSelector } from "react-redux";
 
 export default function CreateMissions(props) {
+  const user = useSelector(state => state.user.value)
   const [loading, setLoading] = useState(true);
   const [structures, setStructures] = useState([]);
   const [referants, setReferants] = useState([]);
@@ -50,16 +52,34 @@ export default function CreateMissions(props) {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("http://localhost:3000/structures/");
+      const res = await fetch(`${process.env.BACKEND_URL}/structures`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${user.token}`
+        }
+      });
       const fetchStructures = await res.json();
-      setStructures(fetchStructures);
-      const res2 = await fetch("http://localhost:3000/referants/");
+      setStructures(fetchStructures.data);
+      const res2 = await fetch(`${process.env.BACKEND_URL}/referants/`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${user.token}`
+        }
+      });
       const fetchReferants = await res2.json();
-      setReferants(fetchReferants);
-      const res3 = await fetch("http://localhost:3000/users/");
+      setReferants(fetchReferants.data);
+      const res3 = await fetch(`${process.env.BACKEND_URL}/users/`,{
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${user.token}`
+        }
+      });
       const fetchUsers = await res3.json();
       setUsers(
-        fetchUsers.filter(
+        fetchUsers.data.filter(
           (user) =>
             user.mission._id === "639494b656430998cd5eabb1" ||
             user.mission._id === props.missionId
@@ -67,25 +87,33 @@ export default function CreateMissions(props) {
       );
       if (props.missionId) {
         const res4 = await fetch(
-          `http://localhost:3000/missions/${props.missionId}`
+          `${process.env.BACKEND_URL}/missions/${props.missionId}`, {
+            method: 'GET', 
+            headers: {
+              'Content-Type': 'application/json',
+              'authorization': `bearer ${user.token}`
+            }
+          }
         );
         const missionInfoData = await res4.json();
-        setMissionInfo(missionInfoData);
+        setMissionInfo(missionInfoData.data);
       }
       setLoading(false);
     })();
   }, []);
 
+  console.log(user)
+
   const handleSendData = async () => {
     const res = await fetch(
-      `http://localhost:3000/missions/${props.missionId ? "update" : "create"}`,
+      `${process.env.BACKEND_URL}/missions/${props.missionId ? "update" : "create"}`,
       {
         method: "POST",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${user.token}`
         },
-        body: JSON.stringify({ ...missionInfo, missionId: props.missionId })
+        body: JSON.stringify({ ...missionInfo, missionId: props.missionId, connectedId: user._id })
       }
     );
     const data = await res.json();
@@ -98,12 +126,12 @@ export default function CreateMissions(props) {
 
   const handleDeleteMission = async () => {
     const res = await fetch(
-      `http://localhost:3000/missions/${props.missionId}/${missionInfo.volunteer._id}`,
+      `${process.env.BACKEND_URL}/missions/${props.missionId}/${missionInfo.volunteer._id}`,
       {
         method: "DELETE",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${user.token}`
         }
       }
     );

@@ -4,8 +4,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import { useSelector } from "react-redux";
 
 export default function CreateUpdateStructures(props) {
+  const user = useSelector((state) => state.user.value);
   const [loading, setLoading] = useState(true);
   const [structureInfo, setStructureInfo] = useState({
     name: "",
@@ -34,10 +36,21 @@ export default function CreateUpdateStructures(props) {
     (async () => {
       if (props.structureId) {
         const res = await fetch(
-          `http://localhost:3000/structures/${props.structureId}`
+          `${process.env.BACKEND_URL}/structures/${props.structureId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `bearer ${user.token}`
+            }
+          }
         );
         const structureInfoData = await res.json();
-        setStructureInfo(structureInfoData);
+        if (!structureInfoData.result) {
+          props.handleSnackBar(fetchMissions.severity, fetchMissions.message);
+          return;
+        }
+        setStructureInfo(structureInfoData.data);
       }
       setLoading(false);
     })();
@@ -45,16 +58,19 @@ export default function CreateUpdateStructures(props) {
 
   const handleSendData = async () => {
     const res = await fetch(
-      `http://localhost:3000/structures/${props.structureId ? "update" : "create"}`,
+      `${process.env.BACKEND_URL}/structures/${
+        props.structureId ? "update" : "create"
+      }`,
       {
         method: "POST",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          authorization: `bearer ${user.token}`
         },
         body: JSON.stringify({
           ...structureInfo,
-          structureId: props.structureId
+          structureId: props.structureId,
+          connectedId: user._id
         })
       }
     );
@@ -68,12 +84,12 @@ export default function CreateUpdateStructures(props) {
 
   const handleDeleteStructure = async () => {
     const res = await fetch(
-      `http://localhost:3000/structures/${props.structureId}`,
+      `${process.env.BACKEND_URL}/structures/${props.structureId}`,
       {
         method: "DELETE",
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "authorization": `bearer ${user.token}`
         }
       }
     );
@@ -332,7 +348,7 @@ export default function CreateUpdateStructures(props) {
         >
           {props.structureId ? "Update Structure" : "Create Structure"}
         </Button>
-        {props.structureId && (
+        {/* {props.structureId && (
           <Button
             className={styles.button}
             variant="contained"
@@ -341,7 +357,7 @@ export default function CreateUpdateStructures(props) {
           >
             Delete Structure
           </Button>
-        )}
+        )} */}
       </div>
     </div>
   );

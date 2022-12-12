@@ -11,9 +11,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useSelector } from "react-redux";
 import "dayjs/locale/fr";
 
+ 
 export default function CreateUpdateVolunteers(props) {
+  const user = useSelector(state => state.user.value)
   const [loading, setLoading] = useState(true);
   const [missions, setMissions] = useState([]);
   const [volunteerInfo, setVolunteerInfo] = useState({
@@ -48,14 +51,35 @@ export default function CreateUpdateVolunteers(props) {
   useEffect(() => {
     (async () => {
       if (props.userId) {
-        const res = await fetch(`http://localhost:3000/users/${props.userId}`);
+        const res = await fetch(`${process.env.BACKEND_URL}/users/${props.userId}`, {
+          method: 'GET', 
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': `bearer ${user.token}`
+          },
+        });
         const volunteerInfoData = await res.json();
-        setVolunteerInfo(volunteerInfoData);
+        if(!volunteerInfoData.result){
+          props.handleSnackBar(fetchMissions.severity, fetchMissions.message)
+          return
+        }
+        setVolunteerInfo(volunteerInfoData.data);
       }
-      const res = await fetch("http://localhost:3000/missions/");
+      const res = await fetch(`${process.env.BACKEND_URL}/missions/`, {
+        method: 'GET', 
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': `bearer ${user.token}`
+        }
+      });
       const fetchMissions = await res.json();
+      if(!fetchMissions.result){
+        props.handleSnackBar(fetchMissions.severity, fetchMissions.message)
+        
+        return
+      }
       setMissions(
-        fetchMissions.filter(
+        fetchMissions.data.filter(
           (mission) =>
             mission.volunteer._id === "639496d556430998cd5eabf5" ||
             mission.volunteer._id === props.userId
@@ -67,14 +91,15 @@ export default function CreateUpdateVolunteers(props) {
 
   const handleSendData = async () => {
     const res = await fetch(
-      `http://localhost:3000/users/${props.userId ? "update" : "create"}`,
+      `${process.env.BACKEND_URL}/users/${props.userId ? "update" : "create"}`,
       {
         method: "POST",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'authorization': `bearer ${user.token}`
         },
-        body: JSON.stringify({ ...volunteerInfo, userId: props.userId })
+        body: JSON.stringify({ ...volunteerInfo, userId: props.userId, connectedId: user._id })
       }
     );
     const data = await res.json();
@@ -86,12 +111,13 @@ export default function CreateUpdateVolunteers(props) {
   };
   const handleDeleteUser = async () => {
     const res = await fetch(
-      `http://localhost:3000/users/${props.userId}/${volunteerInfo.mission._id}`,
+      `${process.env.BACKEND_URL}/users/${props.userId}/${volunteerInfo.mission._id}`,
       {
         method: "DELETE",
         headers: {
           Accept: "application/json",
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          'authorization': `bearer ${user.token}`
         }
       }
     );
