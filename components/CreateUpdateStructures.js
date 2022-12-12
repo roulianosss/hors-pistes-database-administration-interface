@@ -70,7 +70,7 @@ export default function CreateUpdateStructures(props) {
         body: JSON.stringify({
           ...structureInfo,
           structureId: props.structureId,
-          connectedId: user._id
+          connectedId: user.id
         })
       }
     );

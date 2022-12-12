@@ -99,7 +99,7 @@ export default function CreateUpdateVolunteers(props) {
           "Content-Type": "application/json",
           'authorization': `bearer ${user.token}`
         },
-        body: JSON.stringify({ ...volunteerInfo, userId: props.userId, connectedId: user._id })
+        body: JSON.stringify({ ...volunteerInfo, userId: props.userId, connectedId: user.id })
       }
     );
     const data = await res.json();

@@ -16,12 +16,11 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useSelector } from "react-redux";
 
 export default function CreateMissions(props) {
-  const user = useSelector(state => state.user.value)
+  const user = useSelector((state) => state.user.value);
   const [loading, setLoading] = useState(true);
   const [structures, setStructures] = useState([]);
   const [referants, setReferants] = useState([]);
   const [users, setUsers] = useState([]);
-
   const [missionInfo, setMissionInfo] = useState({
     volunteer: "639496d556430998cd5eabf5",
     projectName: "",
@@ -40,42 +39,43 @@ export default function CreateMissions(props) {
       hostingStructure: "",
       sendingStructure: "",
       visa: "",
-      wifi: ""
+      wifi: "",
     },
     missionReferant: {
       name: "",
       surname: "",
       email: "",
-      phone: ""
-    }
+      phone: "",
+    },
   });
 
   useEffect(() => {
+    // fetch data on component openning
     (async () => {
       const res = await fetch(`${process.env.BACKEND_URL}/structures`, {
-        method: 'GET', 
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'authorization': `bearer ${user.token}`
-        }
+          "Content-Type": "application/json",
+          authorization: `bearer ${user.token}`,
+        },
       });
       const fetchStructures = await res.json();
       setStructures(fetchStructures.data);
       const res2 = await fetch(`${process.env.BACKEND_URL}/referants/`, {
-        method: 'GET', 
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'authorization': `bearer ${user.token}`
-        }
+          "Content-Type": "application/json",
+          authorization: `bearer ${user.token}`,
+        },
       });
       const fetchReferants = await res2.json();
       setReferants(fetchReferants.data);
-      const res3 = await fetch(`${process.env.BACKEND_URL}/users/`,{
-        method: 'GET', 
+      const res3 = await fetch(`${process.env.BACKEND_URL}/users/`, {
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'authorization': `bearer ${user.token}`
-        }
+          "Content-Type": "application/json",
+          authorization: `bearer ${user.token}`,
+        },
       });
       const fetchUsers = await res3.json();
       setUsers(
@@ -87,12 +87,13 @@ export default function CreateMissions(props) {
       );
       if (props.missionId) {
         const res4 = await fetch(
-          `${process.env.BACKEND_URL}/missions/${props.missionId}`, {
-            method: 'GET', 
+          `${process.env.BACKEND_URL}/missions/${props.missionId}`,
+          {
+            method: "GET",
             headers: {
-              'Content-Type': 'application/json',
-              'authorization': `bearer ${user.token}`
-            }
+              "Content-Type": "application/json",
+              authorization: `bearer ${user.token}`,
+            },
           }
         );
         const missionInfoData = await res4.json();
@@ -102,18 +103,23 @@ export default function CreateMissions(props) {
     })();
   }, []);
 
-  console.log(user)
-
   const handleSendData = async () => {
+    // Sending data to Database CREATE and UPDATE routes
     const res = await fetch(
-      `${process.env.BACKEND_URL}/missions/${props.missionId ? "update" : "create"}`,
+      `${process.env.BACKEND_URL}/missions/${
+        props.missionId ? "update" : "create"
+      }`,
       {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'authorization': `bearer ${user.token}`
+          "Content-Type": "application/json",
+          authorization: `bearer ${user.token}`,
         },
-        body: JSON.stringify({ ...missionInfo, missionId: props.missionId, connectedId: user._id })
+        body: JSON.stringify({
+          ...missionInfo,
+          missionId: props.missionId,
+          connectedId: user.id,
+        }),
       }
     );
     const data = await res.json();
@@ -130,9 +136,9 @@ export default function CreateMissions(props) {
       {
         method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
-          'authorization': `bearer ${user.token}`
-        }
+          "Content-Type": "application/json",
+          authorization: `bearer ${user.token}`,
+        },
       }
     );
     const data = await res.json();
@@ -154,7 +160,7 @@ export default function CreateMissions(props) {
           display: "flex",
           height: "70vh",
           justifyContent: "center",
-          alignItems: "center"
+          alignItems: "center",
         }}
       >
         <CircularProgress />
@@ -187,15 +193,11 @@ export default function CreateMissions(props) {
               Volunteer
             </InputLabel>
             <Select
-              value={
-                missionInfo.volunteer
-                  ? missionInfo.volunteer._id
-                  : "639496d556430998cd5eabf5"
-              }
+              value={missionInfo.volunteer._id}
               onChange={(e) =>
                 setMissionInfo({
                   ...missionInfo,
-                  volunteer: { _id: e.target.value }
+                  volunteer: { _id: e.target.value },
                 })
               }
               label="Host Structure"
@@ -236,7 +238,7 @@ export default function CreateMissions(props) {
               onChange={(e) =>
                 setMissionInfo({
                   ...missionInfo,
-                  hostStructure: { _id: e.target.value }
+                  hostStructure: { _id: e.target.value },
                 })
               }
               label="Host Structure"
@@ -262,15 +264,11 @@ export default function CreateMissions(props) {
             <Select
               labelId="Coordination Structure"
               id="Coordination Structure"
-              value={
-                missionInfo.coordinationStructure
-                  ? missionInfo.coordinationStructure._id
-                  : "63937b966cc11d3f27c32d2e"
-              }
+              value={missionInfo.coordinationStructure._id}
               onChange={(e) =>
                 setMissionInfo({
                   ...missionInfo,
-                  coordinationStructure: { _id: e.target.value }
+                  coordinationStructure: { _id: e.target.value },
                 })
               }
               label="Coordination Structure"
@@ -294,15 +292,11 @@ export default function CreateMissions(props) {
             <Select
               labelId="Support Structure"
               id="Support Structure"
-              value={
-                missionInfo.supportStructure
-                  ? missionInfo.supportStructure._id
-                  : "63937b966cc11d3f27c32d2e"
-              }
+              value={missionInfo.supportStructure._id}
               onChange={(e) =>
                 setMissionInfo({
                   ...missionInfo,
-                  supportStructure: { _id: e.target.value }
+                  supportStructure: { _id: e.target.value },
                 })
               }
               label="Support Structure"
@@ -322,7 +316,7 @@ export default function CreateMissions(props) {
               onChange={(value) =>
                 setMissionInfo({
                   ...missionInfo,
-                  startDate: new Date(value).toUTCString()
+                  startDate: new Date(value).toUTCString(),
                 })
               }
               renderInput={(params) => (
@@ -330,7 +324,7 @@ export default function CreateMissions(props) {
                   {...params}
                   sx={{
                     m: 1,
-                    minWidth: "20vw"
+                    minWidth: "20vw",
                   }}
                   size="small"
                 />
@@ -344,7 +338,7 @@ export default function CreateMissions(props) {
               onChange={(value) =>
                 setMissionInfo({
                   ...missionInfo,
-                  endDate: new Date(value).toUTCString()
+                  endDate: new Date(value).toUTCString(),
                 })
               }
               renderInput={(params) => (
@@ -352,7 +346,7 @@ export default function CreateMissions(props) {
                   {...params}
                   sx={{
                     m: 1,
-                    minWidth: "20vw"
+                    minWidth: "20vw",
                   }}
                   size="small"
                 />
@@ -367,7 +361,7 @@ export default function CreateMissions(props) {
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
-                subventionNumber: e.target.value
+                subventionNumber: e.target.value,
               })
             }
             sx={{ m: 1, minWidth: "20vw" }}
@@ -389,7 +383,7 @@ export default function CreateMissions(props) {
               onChange={(e) =>
                 setMissionInfo({
                   ...missionInfo,
-                  projectReferant: { _id: e.target.value }
+                  projectReferant: { _id: e.target.value },
                 })
               }
               label="Project Referant"
@@ -425,7 +419,7 @@ export default function CreateMissions(props) {
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
-                practicalInformation: e.target.value
+                practicalInformation: e.target.value,
               })
             }
             sx={{ m: 1, minWidth: "20vw" }}
@@ -439,23 +433,19 @@ export default function CreateMissions(props) {
 
           <FormControl
             variant="standard"
-            sx={{ minWidth: "16vw" }}
+            sx={{ m:1 }}
             size="small"
           >
             <InputLabel>Green Travel</InputLabel>
             <Select
-              value={
-                missionInfo.financialInformations.greenTravel
-                  ? missionInfo.financialInformations.greenTravel
-                  : "false"
-              }
+              value={missionInfo.financialInformations.greenTravel}
               onChange={(e) =>
                 setMissionInfo({
                   ...missionInfo,
                   financialInformations: {
                     ...missionInfo.financialInformations,
-                    greenTravel: e.target.value
-                  }
+                    greenTravel: e.target.value,
+                  },
                 })
               }
               label="Green Travel"
@@ -478,8 +468,8 @@ export default function CreateMissions(props) {
                   ...missionInfo,
                   financialInformations: {
                     ...missionInfo.financialInformations,
-                    travel: e.target.value
-                  }
+                    travel: e.target.value,
+                  },
                 })
               }
               startAdornment={
@@ -499,8 +489,8 @@ export default function CreateMissions(props) {
                   ...missionInfo,
                   financialInformations: {
                     ...missionInfo.financialInformations,
-                    pocketMoney: e.target.value
-                  }
+                    pocketMoney: e.target.value,
+                  },
                 })
               }
               startAdornment={
@@ -521,8 +511,8 @@ export default function CreateMissions(props) {
                   ...missionInfo,
                   financialInformations: {
                     ...missionInfo.financialInformations,
-                    hostingStructure: e.target.value
-                  }
+                    hostingStructure: e.target.value,
+                  },
                 })
               }
               startAdornment={
@@ -542,8 +532,8 @@ export default function CreateMissions(props) {
                   ...missionInfo,
                   financialInformations: {
                     ...missionInfo.financialInformations,
-                    sendingStructure: e.target.value
-                  }
+                    sendingStructure: e.target.value,
+                  },
                 })
               }
               startAdornment={
@@ -561,8 +551,8 @@ export default function CreateMissions(props) {
                   ...missionInfo,
                   financialInformations: {
                     ...missionInfo.financialInformations,
-                    visa: e.target.value
-                  }
+                    visa: e.target.value,
+                  },
                 })
               }
               startAdornment={
@@ -580,8 +570,8 @@ export default function CreateMissions(props) {
                   ...missionInfo,
                   financialInformations: {
                     ...missionInfo.financialInformations,
-                    wifi: e.target.value
-                  }
+                    wifi: e.target.value,
+                  },
                 })
               }
               startAdornment={
@@ -599,14 +589,15 @@ export default function CreateMissions(props) {
             label="Name"
             variant="outlined"
             type="text"
+            sx={{ m: 1, minWidth: "20vw" }}
             value={missionInfo.missionReferant.name}
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
                 missionReferant: {
                   ...missionInfo.missionReferant,
-                  name: e.target.value
-                }
+                  name: e.target.value,
+                },
               })
             }
             size="small"
@@ -615,14 +606,15 @@ export default function CreateMissions(props) {
             label="Surname"
             variant="outlined"
             type="text"
+            sx={{ m: 1, minWidth: "20vw" }}
             value={missionInfo.missionReferant.surname}
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
                 missionReferant: {
                   ...missionInfo.missionReferant,
-                  surname: e.target.value
-                }
+                  surname: e.target.value,
+                },
               })
             }
             size="small"
@@ -631,14 +623,15 @@ export default function CreateMissions(props) {
             label="Email"
             variant="outlined"
             type="text"
+            sx={{ m: 1, minWidth: "20vw" }}
             value={missionInfo.missionReferant.email}
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
                 missionReferant: {
                   ...missionInfo.missionReferant,
-                  email: e.target.value
-                }
+                  email: e.target.value,
+                },
               })
             }
             size="small"
@@ -647,14 +640,15 @@ export default function CreateMissions(props) {
             label="Phone"
             variant="outlined"
             type="text"
+            sx={{ m: 1, minWidth: "20vw" }}
             value={missionInfo.missionReferant.phone}
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
                 missionReferant: {
                   ...missionInfo.missionReferant,
-                  phone: e.target.value
-                }
+                  phone: e.target.value,
+                },
               })
             }
             size="small"
