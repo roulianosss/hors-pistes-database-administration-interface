@@ -50,9 +50,9 @@ export default function ListVolunteers(props) {
         name: el.name,
         OIDNumber: el.OIDNumber,
         qualityLabelHostNumber: el.qualityLabelHostNumber,
-        zipCode: el.adress.zipCode,
-        country: el.adress.country,
-        city: el.adress.city
+        zipCode: el.address.zipCode,
+        country: el.address.country,
+        city: el.address.city
       };
     });
 

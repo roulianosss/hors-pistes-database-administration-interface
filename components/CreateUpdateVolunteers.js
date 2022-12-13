@@ -35,7 +35,7 @@ export default function CreateUpdateVolunteers(props) {
     IBAN: "",
     CESNumber: "",
     ICNumber: "",
-    adress: {
+    address: {
       street: '',
       zipCode: "",
       city: "",
@@ -373,7 +373,7 @@ export default function CreateUpdateVolunteers(props) {
       </div>
       <div className={styles.globalCenter}>
         <div className={styles.missionReferantInformations}>
-          <p>Adresse Informations:</p>
+          <p>Address Informations:</p>
           <TextField
             label="Street"
             variant="outlined"
@@ -381,10 +381,10 @@ export default function CreateUpdateVolunteers(props) {
             onChange={(e) =>
               setVolunteerInfo({
                 ...volunteerInfo,
-                adress: { ...volunteerInfo.adress, street: e.target.value }
+                address: { ...volunteerInfo.address, street: e.target.value }
               })
             }
-            value={volunteerInfo.adress.street}
+            value={volunteerInfo.address.street}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
@@ -395,10 +395,10 @@ export default function CreateUpdateVolunteers(props) {
             onChange={(e) =>
               setVolunteerInfo({
                 ...volunteerInfo,
-                adress: { ...volunteerInfo.adress, zipCode: e.target.value }
+                address: { ...volunteerInfo.address, zipCode: e.target.value }
               })
             }
-            value={volunteerInfo.adress.zipCode}
+            value={volunteerInfo.address.zipCode}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
@@ -409,10 +409,10 @@ export default function CreateUpdateVolunteers(props) {
             onChange={(e) =>
               setVolunteerInfo({
                 ...volunteerInfo,
-                adress: { ...volunteerInfo.adress, city: e.target.value }
+                address: { ...volunteerInfo.address, city: e.target.value }
               })
             }
-            value={volunteerInfo.adress.city}
+            value={volunteerInfo.address.city}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
@@ -423,10 +423,10 @@ export default function CreateUpdateVolunteers(props) {
             onChange={(e) =>
               setVolunteerInfo({
                 ...volunteerInfo,
-                adress: { ...volunteerInfo.adress, country: e.target.value }
+                address: { ...volunteerInfo.address, country: e.target.value }
               })
             }
-            value={volunteerInfo.adress.country}
+            value={volunteerInfo.address.country}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />

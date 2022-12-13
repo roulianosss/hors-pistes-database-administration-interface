@@ -13,7 +13,7 @@ export default function CreateUpdateStructures(props) {
     name: "",
     OIDNumber: "",
     qualityLabelHostNumber: "",
-    adress: {
+    address: {
       zipCode: "",
       city: "",
       country: ""
@@ -159,17 +159,17 @@ export default function CreateUpdateStructures(props) {
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
-          <p>Adress:</p>
+          <p>Address:</p>
           <TextField
             label="Zip Code"
             variant="outlined"
             onChange={(e) =>
               setStructureInfo({
                 ...structureInfo,
-                adress: { ...structureInfo.adress, zipCode: e.target.value }
+                address: { ...structureInfo.address, zipCode: e.target.value }
               })
             }
-            value={structureInfo.adress.zipCode}
+            value={structureInfo.address.zipCode}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
@@ -179,10 +179,10 @@ export default function CreateUpdateStructures(props) {
             onChange={(e) =>
               setStructureInfo({
                 ...structureInfo,
-                adress: { ...structureInfo.adress, city: e.target.value }
+                address: { ...structureInfo.address, city: e.target.value }
               })
             }
-            value={structureInfo.adress.city}
+            value={structureInfo.address.city}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
@@ -192,10 +192,10 @@ export default function CreateUpdateStructures(props) {
             onChange={(e) =>
               setStructureInfo({
                 ...structureInfo,
-                adress: { ...structureInfo.adress, country: e.target.value }
+                address: { ...structureInfo.address, country: e.target.value }
               })
             }
-            value={structureInfo.adress.country}
+            value={structureInfo.address.country}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
