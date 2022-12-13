@@ -177,10 +177,10 @@ export default function CreateMissions(props) {
             required
             label="Project Name"
             variant="outlined"
+            value={missionInfo.projectName}
             onChange={(e) =>
               setMissionInfo({ ...missionInfo, projectName: e.target.value })
             }
-            value={missionInfo.projectName}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />

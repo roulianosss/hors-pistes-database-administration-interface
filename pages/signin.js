@@ -7,8 +7,6 @@ export default function missions() {
  
   return (
     <>
-      
-      
       <HeaderNavBar />
       <Signin />
     </>

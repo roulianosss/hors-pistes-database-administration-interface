@@ -36,6 +36,7 @@ export default function CreateUpdateVolunteers(props) {
     CESNumber: "",
     ICNumber: "",
     adress: {
+      street: '',
       zipCode: "",
       city: "",
       country: ""
@@ -47,6 +48,7 @@ export default function CreateUpdateVolunteers(props) {
     },
     ICExpirationDate: ""
   });
+  console.log(volunteerInfo)
 
   useEffect(() => {
     (async () => {
@@ -372,6 +374,20 @@ export default function CreateUpdateVolunteers(props) {
       <div className={styles.globalCenter}>
         <div className={styles.missionReferantInformations}>
           <p>Adresse Informations:</p>
+          <TextField
+            label="Street"
+            variant="outlined"
+            type="text"
+            onChange={(e) =>
+              setVolunteerInfo({
+                ...volunteerInfo,
+                adress: { ...volunteerInfo.adress, street: e.target.value }
+              })
+            }
+            value={volunteerInfo.adress.street}
+            sx={{ m: 1, minWidth: "20vw" }}
+            size="small"
+          />
           <TextField
             label="Zip Code"
             variant="outlined"
