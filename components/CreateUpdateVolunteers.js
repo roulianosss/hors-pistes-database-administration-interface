@@ -20,6 +20,7 @@ export default function CreateUpdateVolunteers(props) {
   const [loading, setLoading] = useState(true);
   const [missions, setMissions] = useState([]);
   const [volunteerInfo, setVolunteerInfo] = useState({
+    connectionCode: '',
     mission: { _id: "639494b656430998cd5eabb1" },
     name: "",
     surname: "",
