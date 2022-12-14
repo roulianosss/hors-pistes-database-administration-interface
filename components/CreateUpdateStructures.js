@@ -13,6 +13,7 @@ export default function CreateUpdateStructures(props) {
     name: "",
     OIDNumber: "",
     qualityLabelHostNumber: "",
+    siret: '',
     address: {
       zipCode: "",
       city: "",
@@ -153,6 +154,19 @@ export default function CreateUpdateStructures(props) {
               setStructureInfo({
                 ...structureInfo,
                 qualityLabelHostNumber: e.target.value
+              })
+            }
+            value={structureInfo.qualityLabelHostNumber}
+            sx={{ m: 1, minWidth: "20vw" }}
+            size="small"
+          />
+          <TextField
+            label="Siret"
+            variant="outlined"
+            onChange={(e) =>
+              setStructureInfo({
+                ...structureInfo,
+                siret: e.target.value
               })
             }
             value={structureInfo.qualityLabelHostNumber}
