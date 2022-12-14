@@ -167,6 +167,16 @@ export default function CreateUpdateVolunteers(props) {
           />
           <TextField
             required
+            label="Connection Code"
+            variant="outlined"
+            onChange={(e) =>
+              setVolunteerInfo({ ...volunteerInfo, email: e.target.value })
+            }
+            value={volunteerInfo.email}
+            sx={{ m: 1, minWidth: "20vw" }}
+            size="small"
+          />
+          <TextField
             label="Surname"
             variant="outlined"
             onChange={(e) =>
@@ -177,7 +187,6 @@ export default function CreateUpdateVolunteers(props) {
             size="small"
           />
           <TextField
-            required
             label="Name"
             variant="outlined"
             onChange={(e) =>
