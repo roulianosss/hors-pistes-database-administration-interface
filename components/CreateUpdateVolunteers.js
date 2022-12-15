@@ -43,6 +43,7 @@ export default function CreateUpdateVolunteers(props) {
     },
     emergencyContact: {
       name: "",
+      surname: "",
       relation: "",
       phone: ""
     },
@@ -467,6 +468,22 @@ export default function CreateUpdateVolunteers(props) {
               })
             }
             value={volunteerInfo.emergencyContact.name}
+            size="small"
+          />
+          <TextField
+            label="Surname"
+            variant="outlined"
+            type="text"
+            onChange={(e) =>
+              setVolunteerInfo({
+                ...volunteerInfo,
+                emergencyContact: {
+                  ...volunteerInfo.emergencyContact,
+                  surname: e.target.value
+                }
+              })
+            }
+            value={volunteerInfo.emergencyContact.surname}
             size="small"
           />
           <TextField
