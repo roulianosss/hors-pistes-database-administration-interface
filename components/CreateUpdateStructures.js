@@ -15,6 +15,7 @@ export default function CreateUpdateStructures(props) {
     qualityLabelHostNumber: "",
     siret: '',
     address: {
+      address: "",
       zipCode: "",
       city: "",
       country: ""
@@ -169,11 +170,24 @@ export default function CreateUpdateStructures(props) {
                 siret: e.target.value
               })
             }
-            value={structureInfo.qualityLabelHostNumber}
+            value={structureInfo.siret}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
           <p>Address:</p>
+          <TextField
+            label="Street name and number"
+            variant="outlined"
+            onChange={(e) =>
+              setStructureInfo({
+                ...structureInfo,
+                address: { ...structureInfo.address, address: e.target.value }
+              })
+            }
+            value={structureInfo.address.address}
+            sx={{ m: 1, minWidth: "20vw" }}
+            size="small"
+          />
           <TextField
             label="Zip Code"
             variant="outlined"
