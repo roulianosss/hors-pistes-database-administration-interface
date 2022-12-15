@@ -294,7 +294,7 @@ export default function CreateUpdateStructures(props) {
               setStructureInfo({
                 ...structureInfo,
                 legalReferent: {
-                  ...structureInfo.projectReferent,
+                  ...structureInfo.legalReferent,
                   name: e.target.value
                 }
               })
@@ -310,7 +310,7 @@ export default function CreateUpdateStructures(props) {
               setStructureInfo({
                 ...structureInfo,
                 legalReferent: {
-                  ...structureInfo.projectReferent,
+                  ...structureInfo.legalReferent,
                   surname: e.target.value
                 }
               })
@@ -326,7 +326,7 @@ export default function CreateUpdateStructures(props) {
               setStructureInfo({
                 ...structureInfo,
                 legalReferent: {
-                  ...structureInfo.projectReferent,
+                  ...structureInfo.legalReferent,
                   email: e.target.value
                 }
               })
@@ -342,7 +342,7 @@ export default function CreateUpdateStructures(props) {
               setStructureInfo({
                 ...structureInfo,
                 legalReferent: {
-                  ...structureInfo.projectReferent,
+                  ...structureInfo.legalReferent,
                   phone: e.target.value
                 }
               })

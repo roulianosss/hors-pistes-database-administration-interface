@@ -14,13 +14,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useSelector } from "react-redux";
 import "dayjs/locale/fr";
 
- 
 export default function CreateUpdateVolunteers(props) {
-  const user = useSelector(state => state.user.value)
+  const user = useSelector((state) => state.user.value);
   const [loading, setLoading] = useState(true);
   const [missions, setMissions] = useState([]);
   const [volunteerInfo, setVolunteerInfo] = useState({
-    connectionCode: '',
+    connectionCode: "",
     mission: { _id: "639494b656430998cd5eabb1" },
     name: "",
     surname: "",
@@ -37,7 +36,7 @@ export default function CreateUpdateVolunteers(props) {
     CESNumber: "",
     ICNumber: "",
     address: {
-      street: '',
+      street: "",
       zipCode: "",
       city: "",
       country: ""
@@ -49,37 +48,39 @@ export default function CreateUpdateVolunteers(props) {
     },
     ICExpirationDate: ""
   });
-  console.log(volunteerInfo)
 
   useEffect(() => {
     (async () => {
       if (props.userId) {
-        const res = await fetch(`${process.env.BACKEND_URL}/users/${props.userId}`, {
-          method: 'GET', 
-          headers: {
-            'Content-Type': 'application/json',
-            'authorization': `bearer ${user.token}`
-          },
-        });
+        const res = await fetch(
+          `${process.env.BACKEND_URL}/users/${props.userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `bearer ${user.token}`
+            }
+          }
+        );
         const volunteerInfoData = await res.json();
-        if(!volunteerInfoData.result){
-          props.handleSnackBar(fetchMissions.severity, fetchMissions.message)
-          return
+        if (!volunteerInfoData.result) {
+          props.handleSnackBar(fetchMissions.severity, fetchMissions.message);
+          return;
         }
         setVolunteerInfo(volunteerInfoData.data);
       }
       const res = await fetch(`${process.env.BACKEND_URL}/missions/`, {
-        method: 'GET', 
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          'authorization': `bearer ${user.token}`
+          "Content-Type": "application/json",
+          authorization: `bearer ${user.token}`
         }
       });
       const fetchMissions = await res.json();
-      if(!fetchMissions.result){
-        props.handleSnackBar(fetchMissions.severity, fetchMissions.message)
-        
-        return
+      if (!fetchMissions.result) {
+        props.handleSnackBar(fetchMissions.severity, fetchMissions.message);
+
+        return;
       }
       setMissions(
         fetchMissions.data.filter(
@@ -100,9 +101,13 @@ export default function CreateUpdateVolunteers(props) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          'authorization': `bearer ${user.token}`
+          authorization: `bearer ${user.token}`
         },
-        body: JSON.stringify({ ...volunteerInfo, userId: props.userId, connectedId: user.id })
+        body: JSON.stringify({
+          ...volunteerInfo,
+          userId: props.userId,
+          connectedId: user.id
+        })
       }
     );
     const data = await res.json();
@@ -120,7 +125,7 @@ export default function CreateUpdateVolunteers(props) {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          'authorization': `bearer ${user.token}`
+          authorization: `bearer ${user.token}`
         }
       }
     );
@@ -171,9 +176,12 @@ export default function CreateUpdateVolunteers(props) {
             label="Connection Code"
             variant="outlined"
             onChange={(e) =>
-              setVolunteerInfo({ ...volunteerInfo, email: e.target.value })
+              setVolunteerInfo({
+                ...volunteerInfo,
+                connectionCode: e.target.value
+              })
             }
-            value={volunteerInfo.email}
+            value={volunteerInfo.connectionCode}
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
