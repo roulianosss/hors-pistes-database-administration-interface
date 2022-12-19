@@ -174,6 +174,8 @@ export default function CreateUpdateVolunteers(props) {
           />
           <TextField
             required
+            multiline
+            minRows={2}
             label="Connection Code"
             variant="outlined"
             onChange={(e) =>
