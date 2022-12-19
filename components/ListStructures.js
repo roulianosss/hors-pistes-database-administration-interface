@@ -12,12 +12,13 @@ const columns = [
     headerName: "quality Label Host Number",
     width: 200
   },
+  { field: "address", headerName: "Address", width: 150 },
   { field: "zipCode", headerName: "Zip Code", width: 150 },
   { field: "country", headerName: "Country", width: 100 },
   { field: "city", headerName: "City", width: 150 }
 ];
 
-export default function ListVolunteers(props) {
+export default function ListStructures(props) {
   const user = useSelector((state) => state.user.value);
   const [loading, setLoading] = useState(true);
   const [allStructures, setAllStructures] = useState([]);
@@ -50,6 +51,7 @@ export default function ListVolunteers(props) {
         name: el.name,
         OIDNumber: el.OIDNumber,
         qualityLabelHostNumber: el.qualityLabelHostNumber,
+        address: el.address.address,
         zipCode: el.address.zipCode,
         country: el.address.country,
         city: el.address.city
