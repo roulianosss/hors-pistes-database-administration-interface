@@ -171,7 +171,7 @@ export default function CreateMissions(props) {
   return (
     <div className={styles.globalContainer}>
       <div className={styles.globalLeft}>
-        <div className={styles.missionInformationsContainer}>
+        {/* <div className={styles.missionInformationsContainer}>
           <p>Mission Informations:</p>
           <TextField
             required
@@ -425,7 +425,7 @@ export default function CreateMissions(props) {
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           />
-        </div>
+        </div> */}
       </div>
       <div className={styles.globalCenter}>
         <div className={styles.financialInformationsContainer}>
