@@ -19,7 +19,7 @@ export default function CreateMissions(props) {
   const user = useSelector((state) => state.user.value);
   const [loading, setLoading] = useState(true);
   const [structures, setStructures] = useState([]);
-  const [referants, setReferants] = useState([]);
+  const [referents, setReferents] = useState([]);
   const [users, setUsers] = useState([]);
   const [missionInfo, setMissionInfo] = useState({
     volunteer: "639496d556430998cd5eabf5",
@@ -31,7 +31,7 @@ export default function CreateMissions(props) {
     startDate: "",
     endDate: "",
     subventionNumber: "",
-    projectReferant: "63937c406cc11d3f27c32d31",
+    projectReferent: "63937c406cc11d3f27c32d31",
     financialInformations: {
       travel: "",
       greenTravel: "false",
@@ -41,7 +41,7 @@ export default function CreateMissions(props) {
       visa: "",
       wifi: "",
     },
-    missionReferant: {
+    missionReferent: {
       name: "",
       surname: "",
       email: "",
@@ -61,15 +61,15 @@ export default function CreateMissions(props) {
       });
       const fetchStructures = await res.json();
       setStructures(fetchStructures.data);
-      const res2 = await fetch(`${process.env.BACKEND_URL}/referants/`, {
+      const res2 = await fetch(`${process.env.BACKEND_URL}/referents/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
           authorization: `bearer ${user.token}`,
         },
       });
-      const fetchReferants = await res2.json();
-      setReferants(fetchReferants.data);
+      const fetchReferents = await res2.json();
+      setReferents(fetchReferents.data);
       const res3 = await fetch(`${process.env.BACKEND_URL}/users/`, {
         method: "GET",
         headers: {
@@ -373,23 +373,23 @@ export default function CreateMissions(props) {
             sx={{ m: 1, minWidth: "20vw" }}
             size="small"
           >
-            <InputLabel>Project Referant</InputLabel>
+            <InputLabel>Project Referent</InputLabel>
             <Select
               value={
-                missionInfo.projectReferant
-                  ? missionInfo.projectReferant._id
+                missionInfo.projectReferent
+                  ? missionInfo.projectReferent._id
                   : "63937c406cc11d3f27c32d31"
               }
               onChange={(e) =>
                 setMissionInfo({
                   ...missionInfo,
-                  projectReferant: { _id: e.target.value },
+                  projectReferent: { _id: e.target.value },
                 })
               }
-              label="Project Referant"
+              label="Project Referent"
             >
-              {referants.length &&
-                referants.map((el, i) => (
+              {referents.length &&
+                referents.map((el, i) => (
                   <MenuItem key={i} value={`${el._id}`}>
                     {el.name}
                   </MenuItem>
@@ -583,19 +583,19 @@ export default function CreateMissions(props) {
         </div>
       </div>
       <div className={styles.globalRight}>
-        <div className={styles.missionReferantInformationsContainer}>
-          <p>Mission Referant Informations:</p>
+        <div className={styles.missionReferentInformationsContainer}>
+          <p>Mission Referent Informations:</p>
           <TextField
             label="Name"
             variant="outlined"
             type="text"
             sx={{ m: 1, minWidth: "20vw" }}
-            value={missionInfo.missionReferant.name}
+            value={missionInfo.missionReferent.name}
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
-                missionReferant: {
-                  ...missionInfo.missionReferant,
+                missionReferent: {
+                  ...missionInfo.missionReferent,
                   name: e.target.value,
                 },
               })
@@ -607,12 +607,12 @@ export default function CreateMissions(props) {
             variant="outlined"
             type="text"
             sx={{ m: 1, minWidth: "20vw" }}
-            value={missionInfo.missionReferant.surname}
+            value={missionInfo.missionReferent.surname}
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
-                missionReferant: {
-                  ...missionInfo.missionReferant,
+                missionReferent: {
+                  ...missionInfo.missionReferent,
                   surname: e.target.value,
                 },
               })
@@ -624,12 +624,12 @@ export default function CreateMissions(props) {
             variant="outlined"
             type="text"
             sx={{ m: 1, minWidth: "20vw" }}
-            value={missionInfo.missionReferant.email}
+            value={missionInfo.missionReferent.email}
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
-                missionReferant: {
-                  ...missionInfo.missionReferant,
+                missionReferent: {
+                  ...missionInfo.missionReferent,
                   email: e.target.value,
                 },
               })
@@ -641,12 +641,12 @@ export default function CreateMissions(props) {
             variant="outlined"
             type="text"
             sx={{ m: 1, minWidth: "20vw" }}
-            value={missionInfo.missionReferant.phone}
+            value={missionInfo.missionReferent.phone}
             onChange={(e) =>
               setMissionInfo({
                 ...missionInfo,
-                missionReferant: {
-                  ...missionInfo.missionReferant,
+                missionReferent: {
+                  ...missionInfo.missionReferent,
                   phone: e.target.value,
                 },
               })

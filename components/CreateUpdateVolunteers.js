@@ -393,7 +393,7 @@ export default function CreateUpdateVolunteers(props) {
         </div>
       </div>
       <div className={styles.globalCenter}>
-        <div className={styles.missionReferantInformations}>
+        <div className={styles.missionReferentInformations}>
           <p>Address Informations:</p>
           <TextField
             label="Street"
@@ -454,7 +454,7 @@ export default function CreateUpdateVolunteers(props) {
         </div>
       </div>
       <div className={styles.globalRight}>
-        <div className={styles.missionReferantInformations}>
+        <div className={styles.missionReferentInformations}>
           <p>Emergency Contact Informations:</p>
           <TextField
             label="Name"

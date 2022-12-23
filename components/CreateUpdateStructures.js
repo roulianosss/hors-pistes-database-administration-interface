@@ -230,8 +230,8 @@ export default function CreateUpdateStructures(props) {
         </div>
       </div>
       <div className={styles.globalCenter}>
-        <div className={styles.projectReferantInformationsContainer}>
-          <p>Project Referant Informations:</p>
+        <div className={styles.projectReferentInformationsContainer}>
+          <p>Project Referent Informations:</p>
           <TextField
             label="Name"
             variant="outlined"
@@ -299,8 +299,8 @@ export default function CreateUpdateStructures(props) {
         </div>
       </div>
       <div className={styles.globalRight}>
-        <div className={styles.legalReferantInformationsContainer}>
-          <p>Legal Referant Informations:</p>
+        <div className={styles.legalReferentInformationsContainer}>
+          <p>Legal Referent Informations:</p>
           <TextField
             label="Name"
             variant="outlined"
