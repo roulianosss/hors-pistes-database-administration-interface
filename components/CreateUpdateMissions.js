@@ -583,7 +583,7 @@ export default function CreateMissions(props) {
         </div>
       </div>
       <div className={styles.globalRight}>
-        <div className={styles.missionReferentInformationsContainer}>
+        {/* <div className={styles.missionReferentInformationsContainer}>
           <p>Mission Referent Informations:</p>
           <TextField
             label="Name"
@@ -653,7 +653,7 @@ export default function CreateMissions(props) {
             }
             size="small"
           />
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.buttonsContainer}>
