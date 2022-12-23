@@ -74,7 +74,7 @@
   display: flex;
 }
 
-.missionReferantContainer {
+.missionReferentContainer {
   display: flex;
   padding: 15px;
   border-radius: 5px;
@@ -84,13 +84,13 @@
     rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
 
-.missionReferantInformationsContainer {
+.missionReferentInformationsContainer {
   display: flex;
   flex-direction: column;
   margin-left: 5px;
 }
 
-.missionReferantInformationsContainer * {
+.missionReferentInformationsContainer * {
   margin: 2px;
 }
 
