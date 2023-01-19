@@ -3,7 +3,7 @@
 const nextConfig = {
   reactStrictMode: true,
   env: {
-    BACKEND_URL: 'http://localhost:3000',
+    BACKEND_URL: 'https://hors-pistes-backend.vercel.app',
   },
 }
 
